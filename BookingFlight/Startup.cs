@@ -36,6 +36,10 @@ namespace BookingFlight
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
             services.AddControllersWithViews();
+
+            services.AddDbContext<FlightContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("FlightContext")));
+
             services.AddRazorPages();
 
             services.AddAuthorization(options => {
