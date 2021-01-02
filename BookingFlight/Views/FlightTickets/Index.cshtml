@@ -5,8 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
+<h1>Flights</h1>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -14,29 +13,36 @@
     <thead>
         <tr>
             <th>
+                Flight
+                @*
                 @Html.DisplayNameFor(model => model.FlightNumber)
+                *@
             </th>
             <th>
+                Destination
+                @*
                 @Html.DisplayNameFor(model => model.FlightDestination)
+                *@
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FlightNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FlightDestination)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.FlightTicketID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FlightTicketID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FlightTicketID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FlightNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FlightDestination)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.FlightTicketID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.FlightTicketID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.FlightTicketID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

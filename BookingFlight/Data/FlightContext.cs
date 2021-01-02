@@ -16,5 +16,6 @@ namespace BookingFlight.Data
         }
 
         public DbSet<FlightTicket> FlightTickets { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
     }
 }

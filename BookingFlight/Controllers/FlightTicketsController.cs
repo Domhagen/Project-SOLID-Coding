@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BookingFlight.Data;
 using BookingFlight.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookingFlight.Controllers
 {
@@ -18,13 +19,13 @@ namespace BookingFlight.Controllers
         {
             _context = context;
         }
-
+        [Authorize(Policy = "readpolicy")]
         // GET: FlightTickets
         public async Task<IActionResult> Index()
         {
             return View(await _context.FlightTickets.ToListAsync());
         }
-
+        [Authorize(Policy = "writepolicy")]
         // GET: FlightTickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -42,7 +43,7 @@ namespace BookingFlight.Controllers
 
             return View(flightTicket);
         }
-
+        [Authorize(Policy = "writepolicy")]
         // GET: FlightTickets/Create
         public IActionResult Create()
         {
@@ -64,7 +65,7 @@ namespace BookingFlight.Controllers
             }
             return View(flightTicket);
         }
-
+        [Authorize(Policy = "writepolicy")]
         // GET: FlightTickets/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -115,7 +116,7 @@ namespace BookingFlight.Controllers
             }
             return View(flightTicket);
         }
-
+        [Authorize(Policy = "writepolicy")]
         // GET: FlightTickets/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

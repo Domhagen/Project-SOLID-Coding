@@ -11,5 +11,6 @@ namespace BookingFlight.Models
         public int FlightTicketID { get; set; }
         public int FlightNumber { get; set; }
         public string FlightDestination { get; set; }
+        public ICollection<Reservation> Reservations { get; set; }
     }
 }
