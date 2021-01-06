@@ -8,21 +8,25 @@ using Microsoft.EntityFrameworkCore;
 using BookingFlight.Data;
 using BookingFlight.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace BookingFlight.Controllers
 {
     public class ReservationsController : Controller
     {
         private readonly FlightContext _context;
+        private readonly ILogger _logger;
 
-        public ReservationsController(FlightContext context)
+        public ReservationsController(FlightContext context, ILogger<FlightTicketsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
         [Authorize(Policy = "writepolicy")]
         // GET: Reservations
         public async Task<IActionResult> Index()
         {
+            _logger.LogInformation("Log message in the Reservations/Index() method");
             var flightContext = _context.Reservations.Include(r => r.FlightTicket);
             return View(await flightContext.ToListAsync());
         }
@@ -30,6 +34,7 @@ namespace BookingFlight.Controllers
         // GET: Reservations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            _logger.LogInformation("Log message in the Reservations/Details() method");
             if (id == null)
             {
                 return NotFound();
@@ -49,6 +54,7 @@ namespace BookingFlight.Controllers
         // GET: Reservations/Create
         public IActionResult Create()
         {
+            _logger.LogInformation("Log message in the Reservations/Create() method");
             ViewData["FlightTicketID"] = new SelectList(_context.FlightTickets, "FlightTicketID", "FlightNumber");
             return View();
         }
@@ -63,6 +69,7 @@ namespace BookingFlight.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(reservation);
+                _logger.LogInformation("added booking");
                 await _context.SaveChangesAsync();
                 var ticket = (from f in _context.Reservations
                               where f.Id == reservation.Id
@@ -76,6 +83,7 @@ namespace BookingFlight.Controllers
         // GET: Reservations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            _logger.LogInformation("Log message in the Reservations/Edit() method");
             if (id == null)
             {
                 return NotFound();
@@ -107,6 +115,7 @@ namespace BookingFlight.Controllers
                 try
                 {
                     _context.Update(reservation);
+                    _logger.LogInformation("Edited booking");
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -133,6 +142,7 @@ namespace BookingFlight.Controllers
         // GET: Reservations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            _logger.LogInformation("Log message in the Reservations/Delete() method");
             if (id == null)
             {
                 return NotFound();
@@ -156,6 +166,7 @@ namespace BookingFlight.Controllers
         {
             var reservation = await _context.Reservations.FindAsync(id);
             _context.Reservations.Remove(reservation);
+            _logger.LogInformation("Deleted booking");
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
