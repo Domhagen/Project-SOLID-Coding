@@ -20,11 +20,13 @@ namespace BookingFlight.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogInformation("Log message in the Home/Index() method");
             return View();
         }
 
         public IActionResult Privacy()
         {
+            _logger.LogInformation("Log message in the Home/Privacy() method");
             return View();
         }
 
